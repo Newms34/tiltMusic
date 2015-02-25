@@ -34,3 +34,7 @@ OscillatorSample.prototype.toggle = function() {
 OscillatorSample.prototype.changeFrequency = function(val) {
   this.oscillator.frequency.value = val;
 };
+
+OscillatorSample.prototype.changeGain = function(val) {
+  this.gain.value = val;
+};

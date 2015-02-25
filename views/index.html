@@ -3,6 +3,8 @@
 </div>
 <input type='range' min=0 max=360 id='pitchSlider'>
 <button onclick='soundies.toggle()'>Play</button>
+<input type='text' value='meh' id='freqMon'/>
+<input type='text' value='meh' id='volMon'/>
 <div id='anchor'></div>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -11,18 +13,25 @@
 <script>
 var socket = io();
 var soundies = new OscillatorSample();
-$('#pitchSlider').change(function() {
-    socket.emit('soundPitch', $('#pitchSlider').val());
-    return false;
-});
+window.addEventListener('deviceorientation',function(e){
+	var adjustedInput =  Math.floor((Math.max(0,Math.min(e.beta,90))/90)*360)
+	var adjustedVol =  (Math.max(0,Math.min(e.gamma+90,180))/180)*.015;
+	var pitch = {}
+	pitch.adjPitch = adjustedInput;
+	pitch.vol = adjustedVol;
+	socket.emit('soundPitch',pitch);
+	$('#freqMon').val(pitch.adjPitch);
+	$('#volMon').val(pitch.vol);
+})
 socket.on('soundPitch', function(pitch) {
-    var hsCol = 'hsl(' + pitch + ',100%,50%)';
-    var pitchStep = Math.floor(pitch/5)*5;
+    var hsCol = 'hsl(' + pitch.adjPitch + ',100%,50%)';
+    var pitchStep = Math.floor(pitch.adjPitch/5)*5;
     var adjP = 50 + parseInt(pitchStep*5);
     if (soundies.oscillator) {
         soundies.changeFrequency(adjP);
+        soundies.changeGain(pitch.vol);
+        console.log('Vol: ',pitch)
     }
-    console.log(adjP);
 
     $('body').css({
         'background-color': hsCol

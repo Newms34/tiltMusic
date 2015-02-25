@@ -58,11 +58,9 @@ var io = require('socket.io')(http);
 
 io.on('connection',function(socket){
 	socket.on('soundPitch',function(pitch){
-		console.log('Pitch: '+pitch);//send data to server (sorta)
+		console.log('Pitch: '+pitch.adjPitch);//send data to server (sorta)
 		io.emit('soundPitch',pitch)
 	});
 });
 
-http.listen(3000,function(){
-	console.log('Server listening on port 3000');
-})
+http.listen(3000,"192.168.1.80")
