@@ -1,0 +1,26 @@
+<!-- layout.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tilt Music</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class='header'>
+        <div class='buttHead' onclick='window.location.assign("/");'> Home </div>
+        <div class='buttHead' onclick='window.location.assign("/upTaxa/{{taxa.taxon}}");'> Go up a Taxon </div>
+        <div class='buttHead' onclick='window.location.assign("/add");'>Add A Taxon</div>
+        <div class='buttHead' onclick='window.location.assign("/help");'>Help</div>
+    </div>
+    <div class='mainCont'>
+        {% block content %}{% endblock %}
+    </div>
+    <div class='footer'></div>
+
+
+</body>
+
+</html>

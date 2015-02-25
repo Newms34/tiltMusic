@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block content %}
+<h1>Tilt Music!</h1>
+</div>
+<input type='range' min=0 max=360 id='pitchSlider'>
+<button onclick='soundies.toggle()'>Play</button>
+<div id='anchor'></div>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src='/js/static.js'></script>
+<script src='/js/oscillate.js'></script>
+<script>
+var socket = io();
+var soundies = new OscillatorSample();
+$('#pitchSlider').change(function() {
+    socket.emit('soundPitch', $('#pitchSlider').val());
+    return false;
+});
+socket.on('soundPitch', function(pitch) {
+    var hsCol = 'hsl(' + pitch + ',100%,50%)';
+    var pitchStep = Math.floor(pitch/5)*5;
+    var adjP = 50 + parseInt(pitchStep*5);
+    if (soundies.oscillator) {
+        soundies.changeFrequency(adjP);
+    }
+    console.log(adjP);
+
+    $('body').css({
+        'background-color': hsCol
+    });
+});
+</script>
+
+{% endblock %}
