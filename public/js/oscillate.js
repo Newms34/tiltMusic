@@ -13,7 +13,6 @@ OscillatorSample.prototype.play = function() {
   this.gain.value = 0.01;
   this.oscillator.type = 'sine';
   this.oscillator.frequency = '440';
-
   this.oscillator.connect(this.gain);
   this.gain.connect(context.destination);
 
@@ -33,8 +32,4 @@ OscillatorSample.prototype.toggle = function() {
 
 OscillatorSample.prototype.changeFrequency = function(val) {
   this.oscillator.frequency.value = val;
-};
-
-OscillatorSample.prototype.changeGain = function(val) {
-  this.gain.value = val;
 };

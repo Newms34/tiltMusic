@@ -1,0 +1,23 @@
+MISCELLANEOUS SCRAPS:
+
+
+
+socket.on('disconnect',function(){
+        var ipInc = socket.handshake.address;
+        console.log('User ',ipInc,' disconnected.')
+        for (var i=0; i< allOscs.length;i++){
+            //loop thru all users. Change target user, then build
+            //freq list for all users.
+            if (allOscs[i].ip==ipInc){
+                //found the user, so remove their data!
+                allOscs.splice(i,1);
+                allUserNames.splice(i,1);
+            }
+        }
+    });
+
+
+is there a way to forcibly remove a user from the list of socket 'clients'? I.e., to not listen to any events incoming from that user?
+one way may be to generate a 'banned list'. 
+1)if user hasn't been active in 4000 ms, send to banned list and remove allOscs object 
+2)if user then rejoins (reloads site), remove from ban list (if present), and re-initiate user.

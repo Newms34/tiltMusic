@@ -1,42 +1,62 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Tilt Music!</h1>
 </div>
-<input type='range' min=0 max=360 id='pitchSlider'>
-<button onclick='soundies.toggle()'>Play</button>
-<input type='text' value='meh' id='freqMon'/>
-<input type='text' value='meh' id='volMon'/>
+<button onclick='toggleAll()'>Play/Pause</button>
+
+<input type='text' value='meh' id='freqMon' />
 <div id='anchor'></div>
+<div id='panDemo'>(ಠ_ಠ)</div>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src='/js/static.js'></script>
 <script src='/js/oscillate.js'></script>
 <script>
 var socket = io();
-var soundies = new OscillatorSample();
-window.addEventListener('deviceorientation',function(e){
-	var adjustedInput =  Math.floor((Math.max(0,Math.min(e.beta,90))/90)*360)
-	var adjustedVol =  (Math.max(0,Math.min(e.gamma+90,180))/180)*.015;
-	var pitch = {}
-	pitch.adjPitch = adjustedInput;
-	pitch.vol = adjustedVol;
-	socket.emit('soundPitch',pitch);
-	$('#freqMon').val(pitch.adjPitch);
-	$('#volMon').val(pitch.vol);
-})
-socket.on('soundPitch', function(pitch) {
-    var hsCol = 'hsl(' + pitch.adjPitch + ',100%,50%)';
-    var pitchStep = Math.floor(pitch.adjPitch/5)*5;
-    var adjP = 50 + parseInt(pitchStep*5);
-    if (soundies.oscillator) {
-        soundies.changeFrequency(adjP);
-        soundies.changeGain(pitch.vol);
-        console.log('Vol: ',pitch)
-    }
+var oscList = []; //array of oscillators!
+var allPlayin = false;//we makin sweet, sweet music?
 
-    $('body').css({
-        'background-color': hsCol
-    });
+// var soundies = new OscillatorSample();//initialize an instance of the sound thingy. We may need to do this multiple times per user eventually.
+// //Can we use multiple oscillators per audiocontext? Or just one?
+window.addEventListener('deviceorientation', function(e) {
+    var pitch = Math.floor((Math.max(0, Math.min(e.beta, 90)) / 90) * 360)
+    socket.emit('userSoundToServer', pitch);
+    $('#freqMon').val(pitch);
+})
+socket.on('soundPitch', function(allFreqs) {
+    //gotta rewrite this as a foreach for each separate osc.
+    console.log(allFreqs);
+    while (oscList.length != allFreqs.length) {
+        //while loopz to adjust oscList length
+        if (oscList.length < allFreqs.length) {
+            //need moar!
+            var oscInstance = new OscillatorSample();
+            oscList.push(oscInstance);
+        } else if (oscList.length > allFreqs.length) {
+            oscList.pop();
+        }
+    }
+ 	console.log(oscList.length,':',allFreqs.length)
+    //we now have exactly the same amount of oscillators as users.
+    console.log(allFreqs,oscList)
+    for (var i = 0; i < allFreqs.length; i++) {
+    	console.log('Adjusting freq at position: ',i)
+        if (oscList[i]) {
+        	oscList[i].isPlaying = allPlayin;
+        	if (allPlayin){
+        		oscList[i].play();
+        	}
+        	else {
+        		oscList[i].stop();
+        	}
+            oscList[i].changeFrequency(allFreqs[i]); //adjust all oscillator freqs
+        }
+    }
 });
+
+function toggleAll(){
+	console.log('Toggling play active!');
+	(allPlayin)? allPlayin = false : allPlayin = true;
+}
 </script>
 
 {% endblock %}
