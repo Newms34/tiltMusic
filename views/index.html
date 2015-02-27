@@ -1,17 +1,33 @@
-{% extends "layout.html" %} {% block content %}
-<h1>Tilt Music!</h1>
-</div>
-<button onclick='toggleAll()'>Play/Pause</button>
+<!Doctype html>
+<html>
+<head>
+    <title>Tilt Music</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/stylesheets/style.css" rel="stylesheet" />
+</head>
+<body>
+    </div>
+        <h1>Tilt Music!</h1>
+    </div>
+    <div class='interactive col-md-2 col-md-offset-5' ng-app='Tilt' ng-controller='MainController'>
+        <form>
+            <input type= 'text' value ='Enter your name' ng-model='name'/> <button ng-click='start(name)'>Submit</button>
+            <button onclick='toggleAll()'>Play / Pause</button></br>
+            <input type='text' value='meh' id='freqMon' />
+        </form>
+        <div id='anchor'></div>
+        <div id='panDemo'>(ಠ_ಠ)</div>
+        <div class='footer'></div>
+    </div>
 
-<input type='text' value='meh' id='freqMon' />
-<div id='anchor'></div>
-<div id='panDemo'>(ಠ_ಠ)</div>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script src='/js/static.js'></script>
-<script src='/js/oscillate.js'></script>
-<script src='/js/frontEnd.js'>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src='angular/angular.js'></script> <!-- included non-min file for easier debugging -->
+    <script src='/js/controllers/MainController.js'></script>
+    <script src='/js/static.js'></script>
+    <script src='/js/oscillate.js'></script>
+    <script src='/js/socket.js'> </script>
+    <script src='/js/frontEnd.js'>
+</body>
+</html>
 
-</script>
-
-{% endblock %}

@@ -43,7 +43,8 @@ back end sends out list of freqs (NO usernames!)
 front end gets event
 front end converts freqs to sounds: MUSIC!
 
-should we define the initial user, or user with the same IP as server, as only 'output'?
+should we define the initial user, or user with the same IP as server, as only 'output'? allFreqs.shift()
+
 
 
 

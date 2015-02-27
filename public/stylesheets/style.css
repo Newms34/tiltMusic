@@ -2,7 +2,16 @@ html, body {
     width: 100%;
     height: 100%;
 }
-#panDemo{
-position:relative;
-left:50vw;
+#panDemo {
+    position: relative;
+    left: 50vw;
+}
+body {
+    background: #2E8B57;
+}
+.interactive {
+    background: #F0F8FF;
+    border-top: 50px;
+    padding: 70px;
+    border-radius: 20px;
 }
