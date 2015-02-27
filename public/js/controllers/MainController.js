@@ -11,6 +11,13 @@ app.controller("MainController", function($scope, socket){
 	{name: 'keyboard', open: true},
 	{name: 'harmonica', open: true},];
 
+	$scope.user1log=[];
+	$scope.user2log=[];
+	$scope.user3log=[];
+	$scope.user4log=[];
+	$scope.user5log=[];
+
+
 	$scope.start = function(name){
 		$scope.username = name;
 		socket.broadcast.emit('user:join', {
