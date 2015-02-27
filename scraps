@@ -21,3 +21,29 @@ is there a way to forcibly remove a user from the list of socket 'clients'? I.e.
 one way may be to generate a 'banned list'. 
 1)if user hasn't been active in 4000 ms, send to banned list and remove allOscs object 
 2)if user then rejoins (reloads site), remove from ban list (if present), and re-initiate user.
+
+
+The overarching idea:
+
+Most smartphones have accelerometers that tell us their current orientation (rotation in 3-space)
+
+We can use this as input via:
+
+window.addEventListener('deviceorientation',function(output){
+    
+})
+
+From this, we get (among other stuff) three blips of data: alpha, beta, and gamma
+
+addEventListener sends event to server (phone orientation)
+server gets event
+backend searches for user (by identifier), and adjusts their freq
+backend collates all user freqs
+back end sends out list of freqs (NO usernames!)
+front end gets event
+front end converts freqs to sounds: MUSIC!
+
+should we define the initial user, or user with the same IP as server, as only 'output'?
+
+
+
