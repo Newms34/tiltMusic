@@ -1,15 +1,23 @@
 {% extends "layout.html" %} {% block content %}
-<h1>Tilt Music!</h1>
+<div>
+<h1 class="text-center">Tilt Music!</h1><br>
+<h3 class="text-center">Let's create a Symphony</h3>
+<p class="text-center">(using phone accelerometer data)</p>
 </div>
+
+<br>
+<div>
 <button onclick='toggleAll()'>Play/Pause</button>
 
 <input type='text' value='meh' id='freqMon' />
+</div>
 <div id='anchor'></div>
 <div id='panDemo'>(ಠ_ಠ)</div>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src='/js/static.js'></script>
 <script src='/js/oscillate.js'></script>
+<script src='/js/monitor.js'></script>
 <script>
 var socket = io();
 var oscList = []; //array of oscillators!
