@@ -5,3 +5,14 @@ html, body {
 #panDemo{
 position:relative;
 }
+
+body {
+	background: #2E8B57;
+}
+
+.interactive {
+	background: #F0F8FF;
+	border-top: 50px;
+	padding: 70px;
+	border-radius: 20px;
+}
