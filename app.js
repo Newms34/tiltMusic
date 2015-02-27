@@ -5,12 +5,11 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 var app = express();
-
 var routes = require('./routes');
 
-app.engine('html', swig.renderFile);
+// app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+// app.set('view engine', 'html');
 
 //use stuff
 app.use(logger('dev'));
@@ -19,49 +18,17 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
+// app.use('/', routes);
 
-//errors
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.get('/',function(req,res,next){
+    res.sendFile(__dirname+ '/views/index.html');
 });
 
-// error handlers
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    swig.setDefaults({
-        cache: false
-    });
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+ var http = require('http').Server(app);
+ var io = require('socket.io')(http);
 var allUserNames = []; //array of strings, each holding an incoming ip. 
 //These are used as 'usernames', and each is associated with ONE oscillator instance
-
 var allOscs = []; //array of objects. These hold multiple oscillator
 //info bits of the format: {ip: 1.2.3.4, freq}
 
@@ -117,4 +84,33 @@ io.on('connection', function(socket) {
 
 });
 
-http.listen(3000, "192.168.1.80")
+ http.listen(3000, "192.168.1.94")
+
+
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500).send({
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500).send({
+        message: err.message,
+        error: {}
+    });
+});
