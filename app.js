@@ -117,6 +117,4 @@ io.on('connection', function(socket) {
 
 });
 
-http.listen(3000, "127.0.0.1");
-
-// , "192.168.1.80"  , "69.117.41.219"
+http.listen(3000, "192.168.1.80");
