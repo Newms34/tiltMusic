@@ -13,7 +13,7 @@
 <script>
 var socket = io();
 var oscList = []; //array of oscillators!
-var allPlayin = false;//we makin sweet, sweet music?
+var allPlayin = false; //we makin sweet, sweet music?
 
 // var soundies = new OscillatorSample();//initialize an instance of the sound thingy. We may need to do this multiple times per user eventually.
 // //Can we use multiple oscillators per audiocontext? Or just one?
@@ -35,27 +35,30 @@ socket.on('soundPitch', function(allFreqs) {
             oscList.pop();
         }
     }
- 	console.log(oscList.length,':',allFreqs.length)
-    //we now have exactly the same amount of oscillators as users.
-    console.log(allFreqs,oscList)
+    console.log(oscList.length, ':', allFreqs.length)
+        //we now have exactly the same amount of oscillators as users.
+    console.log(allFreqs, oscList)
     for (var i = 0; i < allFreqs.length; i++) {
-    	console.log('Adjusting freq at position: ',i)
-        if (oscList[i]) {
-        	oscList[i].isPlaying = allPlayin;
-        	if (allPlayin){
-        		oscList[i].play();
-        	}
-        	else {
-        		oscList[i].stop();
-        	}
+        console.log('Adjusting freq at position: ', i)
+        if (oscList[i] && oscList[i].isPlaying) {
+
             oscList[i].changeFrequency(allFreqs[i]); //adjust all oscillator freqs
         }
     }
 });
 
-function toggleAll(){
-	console.log('Toggling play active!');
-	(allPlayin)? allPlayin = false : allPlayin = true;
+function toggleAll() {
+    console.log('Toggling play active!');
+    (allPlayin) ? allPlayin = false: allPlayin = true;
+    for (var i = 0; i < oscList.length; i++) {
+        if (allPlayin) {
+            oscList[i].play();
+            oscList[i].isPlaying = true;
+        } else {
+            oscList[i].stop();
+            oscList[i].isPlaying = false;
+        }
+    }
 }
 </script>
 
