@@ -5,7 +5,7 @@ var express = require('express'),
 
 var app = express();
 var routes = require('./routes');
-var config = require('.config');
+var config = require('./.config');
 
 app.set('views', path.join(__dirname, 'views'));
 
