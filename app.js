@@ -32,13 +32,13 @@ var allOscs = []; //array of objects. These hold multiple oscillator
 //info bits of the format: {ip: 1.2.3.4, freq}
 
 io.on('connection', function(socket) {
-    var a_dress = socket.handshake.address; //get incoming client a dress.
-    if (allUserNames.indexOf(a_dress) == -1) {
+    var name = socket.handshake.address; //get incoming client a dress.
+    if (allUserNames.indexOf(name) == -1) {
         //new user!
-        allUserNames.push(a_dress); //store usernamex
+        allUserNames.push(name); //store usernamex
 
         allOscs[allOscs.length] = {
-            ip: a_dress,
+            ip: name,
             osc: 440,
             timeLord: new Date().valueOf()
         }; //create new 'player'. default freq is 440hz
