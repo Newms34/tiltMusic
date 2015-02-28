@@ -1,5 +1,6 @@
 var app = angular.module("Tilt", []);
 
+
 app.controller("MainController", function($scope, socket) {
     $scope.username = undefined;
     $scope.freqs = [];
@@ -39,8 +40,63 @@ app.controller("MainController", function($scope, socket) {
             });
         })
         $scope.width = Math.floor(100/freqIn.length)+'%';
+	     $scope.$digest();
+    };
+});
 
-        $scope.$digest();
+app.controller("formController", function($scope) {
+  $scope.incomplete = true;
+
+  $scope.allUsers = [];
+  
+  $scope.name = name;
+
+  // $scope.start = function(name){  
+  // socket.broadcast.emit('user:join', {
+  //   name: name
+  // });
+  //  socket.on(userStream:name, function(){
+  //   socket.broadcast.emit('usersound', {
+
+  //   })
+  //  })
+  // };
+
+  $scope.complete = function () {
+    $scope.incomplete = false;
+    // $scope.name = name;
+    $scope.allUsers.push($scope.name);
+    console.log($scope.allUsers);
+
+  };
+
+
+
+});
+
+
+
+app.factory('socketFactory', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
     }
+  };
+});
 
-})
