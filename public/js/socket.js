@@ -11,7 +11,7 @@ window.addEventListener('deviceorientation', function(e) {
 })
 socket.on('soundPitch', function(allFreqs) {
     //gotta rewrite this as a foreach for each separate osc.
-    console.log(allFreqs);
+    //console.log(allFreqs, allFreqs.length);
     while (oscList.length != allFreqs.length) {
         //while loopz to adjust oscList length
         if (oscList.length < allFreqs.length) {
@@ -24,7 +24,7 @@ socket.on('soundPitch', function(allFreqs) {
     }
     console.log(oscList.length, ':', allFreqs.length)
         //we now have exactly the same amount of oscillators as users.
-    console.log(allFreqs, oscList)
+    //console.log(allFreqs, oscList)
     for (var i = 0; i < allFreqs.length; i++) {
         console.log('Adjusting freq at position: ', i)
         if (oscList[i] && oscList[i].isPlaying) {
