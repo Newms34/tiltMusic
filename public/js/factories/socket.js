@@ -1,8 +1,10 @@
 app.factory('socket', function ($rootScope) {
+  console.log('socket factory!');
   var socket = io.connect();
+  console.log('socket factory!');
   return {
     on: function (eventName, callback) {
-      socket.on(eventName, function () {  
+      socket.on(eventName, function () { 
         var args = arguments;
         $rootScope.$apply(function () {
           callback.apply(socket, args);
