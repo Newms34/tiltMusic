@@ -11,7 +11,7 @@
         <h3 class="text-center">Let's create a Symphony</h3>
         <p class="text-center">(Using phone accelerometer data)<p>
     </div>
-    <div  ng-app='Tilt' ng-controller='MainController'>
+    <div class='interactive' ng-app='Tilt' ng-controller='MainController' id='angMain'>
         <div class="hidden-md hidden-lg"> <!-- <768px -->
             <form ng-controller="formController" ng-show="incomplete">
                 <input type= 'text' value ='Enter your name' ng-model='name'/> <button ng-click='complete()'>Submit</button>
@@ -27,18 +27,21 @@
         </div>
         <h3 ng-controller="formController">Who's playing: {{name}}</h3>
         <div id='anchor'></div>
-        <div id='panDemo'>(ಠ_ಠ)</div>
+    
         <div class='footer'></div>
+        <div id='graphCont'>
+            <div class='bar' ng-repeat='freq in freqs' style='height:{{width}}; width:{{freq.height}};background-color:hsl(240,100%,{{freq.val}});transform:rotateY({{freq.rot}})'></div>
+        </div>
     </div>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src='/angular/angular.js'></script> <!-- included non-min file for easier debugging -->
     <script src='/js/controllers/MainController.js'></script>
+    <script src='/js/factories/socket.js'></script>
     <script src='/js/static.js'></script>
     <script src='/js/oscillate.js'></script>
     <script src='/js/socket.js'> </script>
-    <script src='/js/frontEnd.js'>
 </body>
 </html>
 

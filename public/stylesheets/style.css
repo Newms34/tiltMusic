@@ -31,4 +31,24 @@ position:relative;
     border-top: 50px;
     padding: 70px;
     border-radius: 20px;
+    width:66%;
+    position:relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#graphCont{
+    width:96%;
+    height:200px;
+    transform-style:preserve-3d;
+    perspective:1500px;
+}
+.bar{
+    height:50%;
+    width:50%;
+    position: relative;
+    display:block;
+    background-color:#fcf;
+    border:1px outset #aac;
+    top:0px;
 }

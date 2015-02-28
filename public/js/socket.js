@@ -28,10 +28,10 @@ socket.on('soundPitch', function(allFreqs) {
     for (var i = 0; i < allFreqs.length; i++) {
         console.log('Adjusting freq at position: ', i)
         if (oscList[i] && oscList[i].isPlaying) {
-
             oscList[i].changeFrequency(allFreqs[i]); //adjust all oscillator freqs
         }
     }
+    angular.element($('#angMain')).scope().freqShow(allFreqs);
 });
 
 function toggleAll() {
