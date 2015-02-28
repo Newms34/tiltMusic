@@ -1,4 +1,4 @@
-app.factory('socket', function ($rootScope) {
+app.factory('socketFactory', function ($rootScope) {
   var socket = io.connect();
   return {
     on: function (eventName, callback) {

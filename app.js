@@ -61,9 +61,45 @@ io.on('connection', function(socket) {
 
             if (allOscs[i].ip == ipInc) {
                 //found the user, so change their frequency!
-                var pitchStep = Math.floor(pitch / 5) * 5; //this basically just moves the pitch by certain 'steps'.
-                var adjPitchServ = 50 + parseInt(pitchStep * 5);
-                allOscs[i].osc = adjPitchServ;
+
+
+                // var pitchStep = Math.floor(pitch / 5) * 5; //this basically just moves the pitch by certain 'steps'. 0-360
+                // var adjPitchServ = 50 + parseInt(pitchStep * 5);
+                var pitchStep = Math.floor(pitch / 45)+1;
+                //console.log(pitchStep);
+
+                switch('pitchstep: ', pitchStep){
+                    case (1): 
+                        var noteFrequency = 261.63;
+                        break;
+                    
+                    case (2): 
+                        var noteFrequency = 277.18;
+                        break;
+                    case (3):
+                        var noteFrequency = 293.66;
+                        break;
+                    case (4): 
+                        var noteFrequency = 311.13;
+                        break;
+                    case (5): 
+                        var noteFrequency = 329.63;
+                        break;
+                    case (6): 
+                        var noteFrequency = 349.23;
+                        break;
+                    case (7): 
+                        var noteFrequency = 369.99;
+                        break;
+                    case (8): 
+                        var noteFrequency = 392.00;
+                        break;
+                }
+
+               // allOscs[i].osc = adjPitchServ;
+                allOscs[i].osc = noteFrequency;
+                console.log('noteFrwequency: ', noteFrequency);
+                //console.log(allOscs[i].osc)
                 allOscs[i].timeLord = new Date(); //update this user's most recent contribution
                 allFreqs.push(allOscs[i].osc)
             } else if ((timeyWimey - allOscs[i].timeLord) > 60000) {
@@ -82,9 +118,7 @@ io.on('connection', function(socket) {
     //where the user is 'deleted' after a certain period of inactivity?
 
 });
-
- http.listen(3000, config.ip ) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
-
+ http.listen(3001) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
