@@ -11,30 +11,40 @@ app.controller("MainController", function($scope, socketFactory){
 	{name: 'keyboard', open: true},
 	{name: 'harmonica', open: true},];
 
-	$scope.start = function(name){
-		$scope.name = name;
-    
-		// socket.broadcast.emit('user:join', {
-		// 	name: name
-		// });
-		 // socket.on(userStream:name, function(){
-			// socket.broadcast.emit('usersound', {
-
-			// })
-		 // })
-	}
-})
+	
+});
 
 app.controller("formController", function($scope) {
   $scope.incomplete = true;
 
+  $scope.allUsers = [];
+  
+  $scope.name = name;
+
+  // $scope.start = function(name){  
+  // socket.broadcast.emit('user:join', {
+  //   name: name
+  // });
+  //  socket.on(userStream:name, function(){
+  //   socket.broadcast.emit('usersound', {
+
+  //   })
+  //  })
+  // };
 
   $scope.complete = function () {
     $scope.incomplete = false;
+    // $scope.name = name;
+    $scope.allUsers.push($scope.name);
+    console.log($scope.allUsers);
+
   };
 
 
+
 });
+
+
 
 app.factory('socketFactory', function ($rootScope) {
   var socket = io.connect();
