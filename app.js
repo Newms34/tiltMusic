@@ -5,7 +5,7 @@ var express = require('express'),
 
 var app = express();
 var routes = require('./routes');
-var config = require('.config');
+var config = require('./.config');
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -83,7 +83,9 @@ io.on('connection', function(socket) {
 
 });
 
+
  http.listen(3000, config.ip ) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
+
 
 
 app.use(function(req, res, next) {
@@ -113,3 +115,4 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
