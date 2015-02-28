@@ -5,6 +5,7 @@ var express = require('express'),
 
 var app = express();
 var routes = require('./routes');
+var config = require('./.config');
 
 app.set('views', path.join(__dirname, 'views'));
 
@@ -34,14 +35,13 @@ io.on('connection', function(socket) {
     var a_dress = socket.handshake.address; //get incoming client a dress.
     if (allUserNames.indexOf(a_dress) == -1) {
         //new user!
-        allUserNames.push(a_dress); //store username
-        console.log('New user ', a_dress, ' connected.');
-        var newPlayer = {
+        allUserNames.push(a_dress); //store usernamex
+
+        allOscs[allOscs.length] = {
             ip: a_dress,
             osc: 440,
             timeLord: new Date().valueOf()
         }; //create new 'player'. default freq is 440hz
-        allOscs.push(newPlayer);
         console.log('new player info: ', allOscs[allOscs.length - 1]);
     } else {
         //old user. do nothing
@@ -54,26 +54,27 @@ io.on('connection', function(socket) {
         var ipInc = socket.handshake.address;
         //there's gotta be a faster way to do this!
         var allFreqs = [];
+        var timeyWimey = new Date().valueOf();
         for (var i = 0; i < allOscs.length; i++) {
             //loop thru all users. Change target user, then build
             //freq list for all users.
+
             if (allOscs[i].ip == ipInc) {
                 //found the user, so change their frequency!
                 var pitchStep = Math.floor(pitch / 5) * 5; //this basically just moves the pitch by certain 'steps'.
                 var adjPitchServ = 50 + parseInt(pitchStep * 5);
                 allOscs[i].osc = adjPitchServ;
                 allOscs[i].timeLord = new Date(); //update this user's most recent contribution
-            }
-            var timeyWimey = new Date().valueOf();
-            if ((timeyWimey - allOscs[i].timeLord) > 4000) {
-                //been 3 sec since this person last contributed. they may be dead.
+                allFreqs.push(allOscs[i].osc)
+            } else if ((timeyWimey - allOscs[i].timeLord) > 60000) {
+                //been 60 sec since this person last contributed. they may be dead.
                 //EXTERMINATE!
                 allOscs.splice(i, 1);
+                allUserNames.splice(i, 1);
             } else {
                 allFreqs.push(allOscs[i].osc);
             }
         }
-        // console.log('Pitch from user : '+ipInc+' is '+pitch); //uncomment this for debugging
         io.emit('soundPitch', allFreqs); //the array of freqs!
     });
     //disconnect seems to not work. It seems that the disconnect happens BEFORE
@@ -82,7 +83,7 @@ io.on('connection', function(socket) {
 
 });
 
- http.listen(3000, "192.168.1.94") // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
+ http.listen(3000, config.ip ) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
 
 
 app.use(function(req, res, next) {
