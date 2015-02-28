@@ -66,59 +66,52 @@ io.on('connection', function(socket) {
 
                 // var pitchStep = Math.floor(pitch / 5) * 5; //this basically just moves the pitch by certain 'steps'. 0-360
                 // var adjPitchServ = 50 + parseInt(pitchStep * 5);
-                var pitchStep = Math.floor(pitch / 45)+1;
-                //console.log(pitchStep);
+                var pitchStep = Math.floor(pitch / 90);
+                console.log(pitchStep, ipInc);
+                 var chordProgression =  [[0,4,7],[-3,0,4],[-7,-3,0],[-5,-1,2]];
 
-                switch('pitchstep: ', pitchStep){
-                    case (1): 
-                        var noteFrequency1 = 261.63;
-                        var noteFrequency2 = 329.63;
-                        var noteFrequency3 = 392.00;
-                        break;
-                    case (2): 
-                        var noteFrequency1 = 293.66;
-                        var noteFrequency2 = 293.66;
-                        var noteFrequency3 = 293.66;
-                        break;
-                    case (3):
-                        var noteFrequency1 = 329.63;
-                        var noteFrequency2 = 329.63;
-                        var noteFrequency3 = 329.63;
+                  var chordFunc = function(start, n) {
+                    var a = 1.059;
+                    //console.log(a);
+                    var freq = start || 440 * Math.pow(a,3);
+                    //console.log(freq * Math.pow(a,n))
+                    return freq * Math.pow(a,n);
+                  };
 
-                        break;
-                    case (4): 
-                        var noteFrequency1 = 349.23;
-                        var noteFrequency2 = 349.23;
-                        var noteFrequency3 = 349.23;
-                        break;
-                    case (5): 
-                        var noteFrequency1 = 392.00;
-                        var noteFrequency2 = 392.00;
-                        var noteFrequency3 = 392.00;
-                        break;
-                    case (6): 
-                        var noteFrequency1 = 440;
-                        var noteFrequency2 = 440;
-                        var noteFrequency3 = 440;
-                        break;
-                    case (7): 
-                        var noteFrequency1 = 493.88;
-                        var noteFrequency2 = 493.88;
-                        var noteFrequency3 = 493.88;
-                        break;
-                    case (8): 
-                        var noteFrequency1 = 523.25;
-                        var noteFrequency2 = 523.25;
-                        var noteFrequency3 = 523.25;
-                        break;
-                }
+                  var noteFrequency1 = chordFunc( null, chordProgression[pitchStep][0]);
+                  var noteFrequency2 = chordFunc( null, chordProgression[pitchStep][1]);
+                  var noteFrequency3 = chordFunc( null, chordProgression[pitchStep][2]);
+
+                // switch('pitchstep: ', pitchStep){
+                //     case (1): 
+                //         var noteFrequency1 = 261.63;
+                //         var noteFrequency2 = 329.63;
+                //         var noteFrequency3 = 392.00;
+                //         break;
+                //     case (2): 
+                //         var noteFrequency1 = 293.66;
+                //         var noteFrequency2 = 293.66;
+                //         var noteFrequency3 = 293.66;
+                //         break;
+                //     case (3):
+                //         var noteFrequency1 = 329.63;
+                //         var noteFrequency2 = 329.63;
+                //         var noteFrequency3 = 329.63;
+
+                //         break;
+                //     case (4): 
+                //         var noteFrequency1 = 349.23;
+                //         var noteFrequency2 = 349.23;
+                //         var noteFrequency3 = 349.23;
+                //         break;
+                // }
 
                // allOscs[i].osc = adjPitchServ;
                 //allOscs[i].osc = noteFrequency;
                 allOscs[i].ocsArr[0]= noteFrequency1;
                 allOscs[i].ocsArr[1]= noteFrequency2;
                 allOscs[i].ocsArr[2]= noteFrequency3;
-                //console.log('noteFrwequency: ', noteFrequency1, noteFrequency2, noteFrequency3);
+                console.log('noteFrwequency: ', noteFrequency1, noteFrequency2, noteFrequency3);
                 //console.log(allOscs[i].osc)
                 allOscs[i].timeLord = new Date(); //update this user's most recent contribution
                 allFreqs.push(noteFrequency1, noteFrequency2, noteFrequency3);
