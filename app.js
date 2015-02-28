@@ -33,13 +33,14 @@ var allOscs = []; //array of objects. These hold multiple oscillator
 
 io.on('connection', function(socket) {
     var a_dress = socket.handshake.address; //get incoming client a dress.
-    if (allUserNames.indexOf(a_dress) == -1) {
+    if (allUserNames.indexOf(a_dress) == -1 && config.ip !== a_dress) {
         //new user!
         allUserNames.push(a_dress); //store usernamex
 
         allOscs[allOscs.length] = {
             ip: a_dress,
             osc: 440,
+            ocsArr: [440],
             timeLord: new Date().valueOf()
         }; //create new 'player'. default freq is 440hz
         console.log('new player info: ', allOscs[allOscs.length - 1]);
@@ -70,38 +71,59 @@ io.on('connection', function(socket) {
 
                 switch('pitchstep: ', pitchStep){
                     case (1): 
-                        var noteFrequency = 261.63;
+                        var noteFrequency1 = 261.63;
+                        var noteFrequency2 = 329.63;
+                        var noteFrequency3 = 392.00;
                         break;
-                    
                     case (2): 
-                        var noteFrequency = 277.18;
+                        var noteFrequency1 = 293.66;
+                        var noteFrequency2 = 293.66;
+                        var noteFrequency3 = 293.66;
                         break;
                     case (3):
-                        var noteFrequency = 293.66;
+                        var noteFrequency1 = 329.63;
+                        var noteFrequency2 = 329.63;
+                        var noteFrequency3 = 329.63;
+
                         break;
                     case (4): 
-                        var noteFrequency = 311.13;
+                        var noteFrequency1 = 349.23;
+                        var noteFrequency2 = 349.23;
+                        var noteFrequency3 = 349.23;
                         break;
                     case (5): 
-                        var noteFrequency = 329.63;
+                        var noteFrequency1 = 392.00;
+                        var noteFrequency2 = 392.00;
+                        var noteFrequency3 = 392.00;
                         break;
                     case (6): 
-                        var noteFrequency = 349.23;
+                        var noteFrequency1 = 440;
+                        var noteFrequency2 = 440;
+                        var noteFrequency3 = 440;
                         break;
                     case (7): 
-                        var noteFrequency = 369.99;
+                        var noteFrequency1 = 493.88;
+                        var noteFrequency2 = 493.88;
+                        var noteFrequency3 = 493.88;
                         break;
                     case (8): 
-                        var noteFrequency = 392.00;
+                        var noteFrequency1 = 523.25;
+                        var noteFrequency2 = 523.25;
+                        var noteFrequency3 = 523.25;
                         break;
                 }
 
                // allOscs[i].osc = adjPitchServ;
-                allOscs[i].osc = noteFrequency;
-                console.log('noteFrwequency: ', noteFrequency);
+                //allOscs[i].osc = noteFrequency;
+                allOscs[i].ocsArr[0]= noteFrequency1;
+                allOscs[i].ocsArr[1]= noteFrequency2;
+                allOscs[i].ocsArr[2]= noteFrequency3;
+                //console.log('noteFrwequency: ', noteFrequency1, noteFrequency2, noteFrequency3);
                 //console.log(allOscs[i].osc)
                 allOscs[i].timeLord = new Date(); //update this user's most recent contribution
-                allFreqs.push(allOscs[i].osc)
+                allFreqs.push(noteFrequency1, noteFrequency2, noteFrequency3);
+
+                //allFreqs.push(allOscs[i].osc)
             } else if ((timeyWimey - allOscs[i].timeLord) > 60000) {
                 //been 60 sec since this person last contributed. they may be dead.
                 //EXTERMINATE!
@@ -111,6 +133,7 @@ io.on('connection', function(socket) {
                 allFreqs.push(allOscs[i].osc);
             }
         }
+        //console.log('----------'+allFreqs.length);
         io.emit('soundPitch', allFreqs); //the array of freqs!
     });
     //disconnect seems to not work. It seems that the disconnect happens BEFORE
