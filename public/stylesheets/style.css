@@ -10,9 +10,27 @@ html, body {
 }
 
 
-
 h1, h2, h3, p {
 	color: #CCC;
+}
+
+h1 {
+    font-family: verdana;
+    text-shadow: 1px 1px 1px #000, 
+               3px 3px 5px gray; 
+    font-weight: bold;
+    font-size: 50px;
+    color: #5cb85c;
+}
+
+span {
+    font-family: impact;
+    font-size: xx-large; 
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    position: relative;
+    
 }
 
 /*#panDemo{
@@ -52,3 +70,9 @@ position:relative;
     border:1px outset #aac;
     top:0px;
 }
+
+.glyphicon {
+        font-size: 1.2em;
+        margin-right: 5px;
+        color: white;
+    }
