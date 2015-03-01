@@ -41,9 +41,12 @@ function toggleAll() {
         if (allPlayin) {
             oscList[i].play();
             oscList[i].isPlaying = true;
+            console.log("hi");
+            $('#play-pause').html("Pause &nbsp; &#9612; &#9612;").addClass("btn-info");
         } else {
             oscList[i].stop();
             oscList[i].isPlaying = false;
+            $('#play-pause').html("Play &nbsp; &#9654;").removeClass("btn-info");
         }
     }
 }
