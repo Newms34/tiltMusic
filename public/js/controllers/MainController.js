@@ -30,18 +30,20 @@ app.controller("MainController", function($scope, socket) {
         });
     }
     $scope.freqShow = function(freqIn) {
-    	$scope.freqs=[];
-        freqIn.forEach(function(aFreq) {
-        	var hue = Math.floor(Math.random()*360);
-            $scope.freqs.push({
-            	height:((aFreq/1850)*100)+'%',
-            	val:((aFreq/1850)*50)+'%',
-            	rot: Math.floor(Math.sin(aFreq)*20)+'deg'
-            });
-        })
-        $scope.width = Math.floor(100/freqIn.length)+'%';
-	     $scope.$digest();
-    };
+       $scope.freqs = [];
+       var len = freqIn.length;
+       var hueDif = 360 / len;
+       for (var i = 0; i < len; i++) {
+           $scope.freqs.push({
+               height: ((freqIn[i] / 1850) * 100) + '%',
+               val: ((freqIn[i] / 1850) * 50) + '%',
+               rot: Math.floor(Math.sin(freqIn[i]) * 20) + 'deg',
+               hue: hueDif * i
+           });
+       }
+       $scope.width = Math.floor(100 / freqIn.length) + '%';
+       $scope.$digest();
+   };
 });
 
 app.controller("formController", function($scope) {
