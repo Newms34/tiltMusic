@@ -30,6 +30,7 @@ var allUserNames = []; //array of strings, each holding an incoming ip.
 //These are used as 'usernames', and each is associated with ONE oscillator instance
 var allOscs = []; //array of objects. These hold multiple oscillator
 //info bits of the format: {ip: 1.2.3.4, freq}
+console.log('hello friend');
 
 io.on('connection', function(socket) {
     var a_dress = socket.handshake.address; //get incoming client a dress.
@@ -47,11 +48,13 @@ io.on('connection', function(socket) {
     } else {
         //old user. do nothing
     }
-    socket.on('userSoundToServer', function(pitch) {
+    socket.on('userSoundToServer', function(userPitch) {
         /*we get an input from a user. PLAN:
         1) store user's IP (ipInc)
         2) check against allUsers IP
         */
+        var pitch = userPitch.pitch;
+        console.log('userPitch', userPitch, 'pitch', pitch);
         var ipInc = socket.handshake.address;
         //there's gotta be a faster way to do this!
         var allFreqs = [];
@@ -67,7 +70,7 @@ io.on('connection', function(socket) {
                 // var pitchStep = Math.floor(pitch / 5) * 5; //this basically just moves the pitch by certain 'steps'. 0-360
                 // var adjPitchServ = 50 + parseInt(pitchStep * 5);
                 var pitchStep = Math.floor(pitch / 90);
-                console.log(pitchStep, ipInc);
+                console.log("pitchStep", pitchStep, 'ipInc', ipInc);
                  var chordProgression =  [[0,4,7],[-3,0,4],[-7,-3,0],[-5,-1,2]];
 
                   var chordFunc = function(start, n) {
@@ -127,14 +130,14 @@ io.on('connection', function(socket) {
             }
         }
         //console.log('----------'+allFreqs.length);
-        io.emit('soundPitch', allFreqs); //the array of freqs!
+        io.emit('soundPitch', {allFreqs: allFreqs, uuid: userPitch.uuid}); //the array of freqs!
     });
     //disconnect seems to not work. It seems that the disconnect happens BEFORE
     //the user's IP can be sent. should we just set this to a setTimeout event,
     //where the user is 'deleted' after a certain period of inactivity?
 
 });
- http.listen(3001) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
+ http.listen(3000) // MAKE SURE THIS REFLECTS YOUR SERVER OR IT WONT WORK I.E. 192.168.1.94:3000 vs localhost...
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

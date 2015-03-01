@@ -28,14 +28,15 @@ app.controller("MainController", function($scope, socketFactory){
     $scope.freqShow = function(freqIn) {
     	$scope.freqs=[];
         freqIn.forEach(function(aFreq) {
-        	var hue = Math.floor(Math.random()*360);
             $scope.freqs.push({
             	height:((aFreq/1850)*100)+'%',
             	val:((aFreq/1850)*50)+'%',
             	rot: Math.floor(Math.sin(aFreq)*20)+'deg'
             });
         })
+
         $scope.width = Math.floor(100/freqIn.length)+'%';
+  };
 
 	$scope.user1log=[];
 	$scope.user2log=[];
