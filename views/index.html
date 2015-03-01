@@ -6,28 +6,39 @@
     <link href="/stylesheets/style.css" rel="stylesheet" />
 </head>
 <body>
+    <div>
+        <h1 class="text-center">&#9834; &nbsp; <i>Tilt</i> Music! &nbsp; &#9834;</h1>
+        <h3 class="text-center">Let's Create a Symphony</h3>
+        <p class="text-center">(Using phone accelerometer data)<p>
     </div>
-        <h1>Tilt Music!</h1>
-    </div>
-    <div class='interactive' ng-app='Tilt' ng-controller='MainController' id='angMain'>
-        <form>
-            {{3+4}}
-            <input type= 'text' value ='Enter your name' ng-model='name'/> <button ng-click='start(name)'>Submit</button>
-            <button onclick='toggleAll();event.preventDefault()'>Play / Pause</button></br>
-            <input type='text' value='meh' id='freqMon' />
-        </form>
-        <div id='anchor'></div>
+    <div ng-app='Tilt' ng-controller='MainController' id='angMain'>
+       <!--  <div class="hidden-md hidden-lg"> 
+
+            <form ng-controller="formController" ng-show="incomplete">
+                <input type= 'text' value ='Enter your name' ng-model='name'/> <button ng-click='complete()'>Submit</button>
+                <input type='text' value='meh' id='freqMon' />
+            </form>
+     
+        </div> -->
+        <div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+            <button class="btn-block btn-lg btn-success" id="play-pause" onclick='toggleAll()'>Play &#9654;</button></br>
+             <div class="col-md-4"></div>
+        </div>
+        <!-- <h3 ng-controller="formController">Who's playing: {{name}}</h3> -->
+        <div id='anchor' class="clearfix"></div>
     
         <div class='footer'></div>
         <pre id='oscList'></pre>
         <div id='graphCont'>
-            <div class='bar' ng-repeat='freq in freqs' style='height:{{width}}; width:{{freq.height}};background-color:hsl(240,100%,{{freq.val}});transform:rotateY({{freq.rot}})'></div>
-        </div>
+           <div class='bar' ng-repeat='freq in freqs' style='height:{{width}}; width:{{freq.height}};background-color:hsl({{freq.hue}},100%,{{freq.val}});transform:rotateY({{freq.rot}});box-shadow:0 0 5px hsl({{freq.hue}},100%,{{freq.val}});'></div>
+       </div>
     </div>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="/angular/angular.min.js"></script>
+    <script src='/angular/angular.js'></script> <!-- included non-min file for easier debugging -->
     <script src='/js/controllers/MainController.js'></script>
     <script src='/js/factories/socket.js'></script>
     <script src='/js/static.js'></script>
@@ -35,4 +46,4 @@
     <script src='/js/socket.js'> </script>
 </body>
 </html>
-
+<!-- class='interactive' -->

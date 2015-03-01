@@ -1,6 +1,9 @@
 var app = angular.module("Tilt", []);
 
-app.controller("MainController", function($scope, socketFactory){
+app.controller("MainController", function($scope, socket) {
+    $scope.username = undefined;
+    $scope.freqs = [];
+    $scope.width = 100+'%';
 
     $scope.instruments = [{
         name: 'drums',
@@ -26,37 +29,53 @@ app.controller("MainController", function($scope, socketFactory){
         });
     }
     $scope.freqShow = function(freqIn) {
-    	$scope.freqs=[];
-        freqIn.forEach(function(aFreq) {
-            $scope.freqs.push({
-            	height:((aFreq/1850)*100)+'%',
-            	val:((aFreq/1850)*50)+'%',
-            	rot: Math.floor(Math.sin(aFreq)*20)+'deg'
-            });
-        })
+       $scope.freqs = [];
+       var len = freqIn.length;
+       var hueDif = 360 / len;
+       for (var i = 0; i < len; i++) {
+           $scope.freqs.push({
+               height: ((freqIn[i] / 1850) * 100) + '%',
+               val: ((freqIn[i] / 1850) * 50) + '%',
+               rot: Math.floor(Math.sin(freqIn[i]) * 20) + 'deg',
+               hue: hueDif * i
+           });
+       }
+       $scope.width = Math.floor(100 / freqIn.length) + '%';
+       $scope.$digest();
+   };
+});
 
-        $scope.width = Math.floor(100/freqIn.length)+'%';
+app.controller("formController", function($scope) {
+  $scope.incomplete = true;
+
+  $scope.allUsers = [];
+  
+  $scope.name = name;
+
+  // $scope.start = function(name){  
+  // socket.broadcast.emit('user:join', {
+  //   name: name
+  // });
+  //  socket.on(userStream:name, function(){
+  //   socket.broadcast.emit('usersound', {
+
+  //   })
+  //  })
+  // };
+
+  $scope.complete = function () {
+    $scope.incomplete = false;
+    // $scope.name = name;
+    $scope.allUsers.push($scope.name);
+    console.log($scope.allUsers);
+
   };
 
-	$scope.user1log=[];
-	$scope.user2log=[];
-	$scope.user3log=[];
-	$scope.user4log=[];
-	$scope.user5log=[];
 
 
-	$scope.start = function(name){
-		$scope.username = name;
-		socket.broadcast.emit('user:join', {
-			name: name
-		});
-		 // socket.on(userStream:name, function(){
-			// socket.broadcast.emit('usersound', {
+});
 
-			// })
-		 // })
-	}
-})
+
 
 app.factory('socketFactory', function ($rootScope) {
   var socket = io.connect();
@@ -81,3 +100,4 @@ app.factory('socketFactory', function ($rootScope) {
     }
   };
 });
+
