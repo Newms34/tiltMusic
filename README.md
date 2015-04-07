@@ -13,20 +13,20 @@ api.
  - This was written for the February 28th Monthly Music Hackathon at Spotify, in NYC, NY.
 
 ##Installation
-Installation is pretty easy. 
-1. Clone the repo.
-2. Run ```npm install```
+>Installation is pretty easy. 
+ 1. Clone the repo.
+ 2. Run ```npm install```
 
 ##Use
-You'll need:
-1. A phone. Or multiple phones.
-2. A computer to act as the server.
-3. A wireless network.
-To use:
-1. Run ```npm start```.
-2. Take a note of the ip address reported in the console. 
-3. In your browser, go to that ip address :3000. So if it's 192.168.1.42, go to 192.168.1.42:3000.
-4. Open the same site on your phone browser(s)
+>You'll need:
+ 1. A phone. Or multiple phones.
+ 2. A computer to act as the server.
+ 3. A wireless network.
+>To use:
+ 1. Run ```npm start```.
+ 2. Take a note of the ip address reported in the console. 
+ 3. In your browser, go to that ip address :3000. So if it's 192.168.1.42, go to 192.168.1.42:3000.
+ 4. Open the same site on your phone browser(s)
 
 ##Contributors
 The following people (and a few others!) helped with this project:
