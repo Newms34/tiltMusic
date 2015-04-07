@@ -8,9 +8,9 @@
 [Contributors](#Contributors)
 
 ##Explanation
--tiltMusic is a musical proof-of-concept. We tie the data from multiple phone accelerometers to a the browser's web audio
+ - tiltMusic is a musical proof-of-concept. We tie the data from multiple phone accelerometers to a the browser's web audio
 api.
--This was written for the February 28th Monthly Music Hackathon at Spotify, in NYC, NY.
+ - This was written for the February 28th Monthly Music Hackathon at Spotify, in NYC, NY.
 
 ##Installation
 Installation is pretty easy. 
