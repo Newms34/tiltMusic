@@ -30,8 +30,9 @@ api.
 
 ##Contributors
 The following people (and a few others!) helped with this project:
-- [Evan Torkos](github.com/etorkos)
-- [David Newman](github.com/Newms34)
-- [Lynda Montgomery](github.com/montgol)
 - [Colin Meret](github.com/colin92)
+- [Lynda Montgomery](github.com/montgol)
+- [David Newman](github.com/Newms34)
+- [Dien Nguyen](github.com/CarpeDN)
 - [Heather Pike](github.com/heatherpike)
+- [Evan Torkos](github.com/etorkos)
